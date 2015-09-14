@@ -9,7 +9,7 @@ KeyRegenerationInterval 3600
 ServerKeyBits 1024
 SyslogFacility AUTH
 LogLevel INFO
-LoginGraceTime 15
+LoginGraceTime 60
 PermitRootLogin no
 StrictModes yes
 RSAAuthentication yes
