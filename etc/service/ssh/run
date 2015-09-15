@@ -1,6 +1,17 @@
 #!/bin/bash -e
 
-echo "fileserver:${FILESERVER_PASSWORD}" | chpasswd
+if [ -n "${FILESERVER_PUBLIC_KEY}" ]; then
+  echo "${FILESERVER_PUBLIC_KEY}" > /etc/ssh/authorized_keys
+  chmod 444 /etc/ssh/authorized_keys
+  chown root:root /etc/ssh/authorized_keys
+fi
+
+if [ ! -f /etc/ssh/keys/ssh_host_rsa_key ]; then
+  ssh-keygen -f /etc/ssh/keys/ssh_host_rsa_key -N '' -t rsa
+  ssh-keygen -f /etc/ssh/keys/ssh_host_dsa_key -N '' -t dsa
+  ssh-keygen -f /etc/ssh/keys/ssh_host_ecdsa_key -N '' -t ecdsa
+  ssh-keygen -f /etc/ssh/keys/ssh_host_ed25519_key -N '' -t ed25519
+fi
 
 mkdir -p -m0755 /var/run/sshd
 

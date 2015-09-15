@@ -4,9 +4,8 @@ MAINTAINER Jernej Kos <jernej@kos.mx>
 
 EXPOSE 28932/tcp
 
+VOLUME /etc/ssh/keys
 VOLUME /readonly/files
-
-ENV FILESERVER_PASSWORD servefiles
 
 RUN apt-get -q -q update && \
  apt-get --no-install-recommends --yes --force-yes install openssh-server git ca-certificates build-essential && \
@@ -37,6 +36,7 @@ RUN apt-get -q -q update && \
  sed 's@session\s*required\s*pam_loginuid.so@session optional pam_loginuid.so@g' -i /etc/pam.d/sshd && \
  sed 's@session\s*optional\s*pam_motd.so@#@g' -i /etc/pam.d/sshd && \
  rm -rf /tmp/scponly && \
+ rm /etc/ssh/ssh_host_* && \
  apt-get purge --yes --force-yes git ca-certificates build-essential && \
  apt-get autoremove --yes --force-yes
 
