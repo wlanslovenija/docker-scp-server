@@ -1,6 +1,4 @@
-FROM wlanslovenija/runit
-
-MAINTAINER Jernej Kos <jernej@kos.mx>
+FROM tozd/runit
 
 EXPOSE 28932/tcp
 
